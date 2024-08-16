@@ -18,7 +18,7 @@ module.exports = async srv => {
         const basicAuth = 'Basic ' + btoa(username + ':' + password);
         let data = JSON.stringify({
             "tokenAuth" : "7rnszHzXvLf0Wu7ocHW4xrTJSEx3jc9",
-            "iinBin" : "210540026044"
+            "iinBin" : sBIN
         });
 
 
@@ -49,7 +49,7 @@ module.exports = async srv => {
             let data = JSON.stringify({
                 "apiKey"    : "9ec03844-96e3-4c78-9a90-a28be063f711",
                 "apiSecret" : "ej+IR6UQ89s0QSz+G68yKr6UdJJFzVA8ySQUsR0GpKERRBTieqdsKmQF98GzMWtheQMOkGx4+iiskkqNSMqWvQ==",
-                "iinBin"    : "7708004767"
+                "iinBin"    : sBIN
             });
     
             let config = {
