@@ -1,0 +1,74 @@
+{
+  "xsappname": "kpo_integrity_backend",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.Read",
+      "description": "Read only Authorization"
+    },
+    {
+      "name": "$XSAPPNAME.Update",
+      "description": "Read and Update Authorization"
+    },
+    {
+      "name": "$XSAPPNAME.Create",
+      "description": "Read and create Authorization"
+    },
+    {
+      "name": "$XSAPPNAME.Delete",
+      "description": "Read and delete Authorization"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "kpo_integrity_backend_admin",
+      "description": "all roles",
+      "scope-references": [
+        "uaa.user",
+        "$XSAPPNAME.Read",
+        "$XSAPPNAME.Update",
+        "$XSAPPNAME.Create",
+        "$XSAPPNAME.Delete"
+      ]
+    },
+    {
+      "name": "kpo_integrity_backend_display",
+      "description": "Display access only ",
+      "scope-references": [
+        "uaa.user",
+        "$XSAPPNAME.Read"
+      ]
+    },
+    {
+      "name": "kpo_integrity_backend_create",
+      "description": "Display & Create access",
+      "scope-references": [
+        "uaa.user",
+        "$XSAPPNAME.Read",
+        "$XSAPPNAME.Create"
+      ]
+    },
+    {
+      "name": "kpo_integrity_backend_update",
+      "description": "Display & Update access",
+      "scope-references": [
+        "uaa.user",
+        "$XSAPPNAME.Read",
+        "$XSAPPNAME.Update"
+      ]
+    },
+    {
+      "name": "kpo_integrity_backend_delete",
+      "description": "Display & Delete  access ",
+      "scope-references": [
+        "uaa.user",
+        "$XSAPPNAME.Read",
+        "$XSAPPNAME.Delete"
+      ]
+    }
+  ]
+}

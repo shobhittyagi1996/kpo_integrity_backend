@@ -1,0 +1,7 @@
+### POST request to SAP BTP CAPM service
+POST http://localhost:4004/odata/v4/integrity-check-api/doGetIntegrityCheckResults
+Content-Type: application/json
+
+{
+    "sBIN":""
+}
