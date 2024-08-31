@@ -7,7 +7,6 @@ using {
 
 
 entity VendorEDDCheckT : cuid, managed {
-
   supplierBIN         : String;
   supplierName        : String;
   supplierAddress     : String;
@@ -17,4 +16,5 @@ entity VendorEDDCheckT : cuid, managed {
   surnameVerifyStatus : String;
   apiResponseStore    : LargeString;
   lastUpdated         : DateTime;
+  worldCheckCaseId    : String;              
 }
