@@ -27,7 +27,7 @@ module.exports = async (srv) => {
       let config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: "https://demo-integrations.it-cpi026-rt.cfapps.eu10-002.hana.ondemand.com/http/te",
+        url: "https://demo-integrations.it-cpi026-rt.cfapps.eu10-002.hana.ondemand.com/http/merged_api",
         headers: {
           "Content-Type": "application/json",
           Authorization: basicAuth,
