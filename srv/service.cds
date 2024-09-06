@@ -7,4 +7,5 @@ service integrity_check_api @(requires : 'authenticated-user') {
     entity EDDResponseT as select from edd.EDDResponseT;
     action doGetADATAPDFReport () returns LargeString;
     action doGetWorldCheckPDFReport ()  returns LargeString;
+    action autoCheckVendorIntegrity (sBIN : String, sCountry:String) returns String;
 }
