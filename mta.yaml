@@ -27,6 +27,7 @@ modules:
     requires:
       - name: SM_EDD_CHECK_HDI
       - name: kpo_integrity_backend-auth
+      - name: kpo_integrity_backend-destination
 
   - name: edd-db-deployer
     type: hdb
@@ -59,3 +60,8 @@ resources:
       config:
         xsappname: kpo_integrity_backend
         tenant-mode: dedicated
+  - name: kpo_integrity_backend-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite

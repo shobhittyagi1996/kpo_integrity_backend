@@ -70,5 +70,6 @@
         "$XSAPPNAME.Delete"
       ]
     }
-  ]
+  ],
+  "attributes": []
 }

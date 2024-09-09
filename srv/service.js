@@ -1,6 +1,13 @@
 const axios = require("axios");
+const textBundle = require("@sap/textbundle").TextBundle;
+var bundle = new textBundle({
+  path: "./_i18n/i18n.properties",
+  locale: "en_EN",
+});
 
 module.exports = async (srv) => {
+  const workflow = await cds.connect.to("workflow");
+
   let securityScope = {
     read: false,
     write: false,
@@ -141,12 +148,76 @@ module.exports = async (srv) => {
       if (response && response.data) {
         console.log(response.data);
         let results = processPayload(response.data);
+         console.log(`start getting seperated results one by one.....`)
+
+        let aPassedResults = results.falseKeys.map(function(sKey){
+          let newKey = {
+            "Questions": bundle?.getText(sKey) || `i18n Key not found for - ${sKey}`
+          }
+          
+          return newKey;
+        });  // where values is coming false
+
+        console.log(`Passed...${aPassedResults}`);
+
+        let aFailedResults = results.trueKeys.map(function(sKey){
+          let newKey = {
+            "Questions": bundle?.getText(sKey) || `i18n Key not found for - ${sKey}`
+          }
+          
+          return newKey;
+        });  // where values is coming true
+
+        console.log(`Failed...${aFailedResults}`);
+
+        let aNotFoundResults = results.emptyKeys.map(function(sKey){
+          let newKey = {
+            "Questions": bundle?.getText(sKey) || `i18n Key not found for - ${sKey}`
+          }
+          
+          return newKey;
+        }); // where result does not found from API
+
+        console.log(`Not Found...${aNotFoundResults}`);
+
+
+
+
+        let oPayloadForWorkflow = {
+          "suppliername": "Demo workflow Company",
+          "supplierbin": sBIN,
+          "passed": aPassedResults,
+          "failed": aFailedResults,
+          "notfound": aNotFoundResults
+      };
+       let resultSpa = await triggerInterityCheckWorkflow(req,workflow,oPayloadForWorkflow);
+       console.log(`workflow triggered!!!`);
+       console.log(resultSpa);
+
         return JSON.stringify(results);
       } else {
         return "something went wrong....";
       }
     }
   });
+
+
+  async function triggerInterityCheckWorkflow(request,workflow,payload){
+    let spaPayload = {
+      "definitionId": "eu10.development-and-test-kjejpj21.suppliermanagement.integrityScreening",
+      "context": payload
+  };
+
+  const resultSpa = await workflow
+            .post(`/workflow/rest/v1/workflow-instances`, spaPayload)
+            .catch(function (error) {
+                return request.error({ code: 417, message: error.message });
+            });
+
+  return resultSpa;
+
+  }
+
 
   function processPayload(Payload) {
     const emptyKeys = [];
