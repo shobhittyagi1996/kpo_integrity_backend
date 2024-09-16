@@ -8,4 +8,6 @@ service integrity_check_api @(requires : 'authenticated-user') {
     action doGetADATAPDFReport () returns LargeString;
     action doGetWorldCheckPDFReport ()  returns LargeString;
     action autoCheckVendorIntegrity (sBIN : String, sCountry:String) returns String;
+    action triggerEDDNotification (supplierEmail:String) returns String;
+    
 }

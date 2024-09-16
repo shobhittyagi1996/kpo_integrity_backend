@@ -4,6 +4,7 @@ var bundle = new textBundle({
   path: "./_i18n/i18n.properties",
   locale: "en_EN",
 });
+const cloudSDK = require('@sap-cloud-sdk/core');
 
 module.exports = async (srv) => {
   const workflow = await cds.connect.to("workflow");
@@ -202,6 +203,38 @@ module.exports = async (srv) => {
   });
 
 
+  srv.on("triggerEDDNotification", async (req) => {
+         let supplierEmail = req.data.supplierEmail;
+          // Retrieve the destination configuration
+          const emailDestination = await cloudSDK.getDestination('Email_notification_utility');
+          console.log('Destination retrieved:', emailDestination);
+
+          // Build the HTTP request configuration
+          const emailRequestConfig = await cloudSDK.buildHttpRequest(emailDestination);
+          console.log('Request configuration:', emailRequestConfig);
+
+          emailRequestConfig.method = 'POST';
+          emailRequestConfig.url = '/odata/v4/catalog/sendmail'; 
+          emailRequestConfig.data = {
+              to: supplierEmail,
+              subject: `KPO Enhanced Due Diligence Questionnaire Submission Request`,
+              supplierID: "SUP001"
+          };
+
+           // Make the request to send the email
+           const emailContentResponse = await axios.request(emailRequestConfig).catch(function(error){
+            return req.error({ code: 417, message: error.message });
+           });
+            
+           return "Notification sent successfully.";
+
+  })
+
+
+
+
+
+
   async function triggerInterityCheckWorkflow(request,workflow,payload){
     let spaPayload = {
       "definitionId": "eu10.development-and-test-kjejpj21.suppliermanagement.integrityScreening",
@@ -286,4 +319,9 @@ module.exports = async (srv) => {
 
     return response;
   }
+
+
+
+
+
 };
